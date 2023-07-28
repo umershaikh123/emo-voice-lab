@@ -14,6 +14,7 @@ import {
   Tooltip,
   TextField,
   Stack,
+  Slider,
 } from "@mui/material"
 import { ThemeProvider } from "@mui/material"
 import { theme } from "@/theme/theme"
@@ -26,6 +27,13 @@ import { useParams } from "next/navigation"
 import InputAdornment from "@mui/material/InputAdornment"
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 import { styled } from "@mui/material/styles"
+
+import VolumeDown from "@mui/icons-material/VolumeDown"
+import VolumeUp from "@mui/icons-material/VolumeUp"
+import PlayCircleIcon from "@mui/icons-material/PlayCircle"
+import PauseCircleIcon from "@mui/icons-material/PauseCircle"
+import PlayArrowIcon from "@mui/icons-material/PlayArrow"
+import PauseIcon from "@mui/icons-material/Pause"
 
 const mainPrimary = theme.palette.primary.main
 const darkGreen = theme.palette.border.main
@@ -82,6 +90,46 @@ const Messages: Message[] = [
   { id: "3", role: "user", content: "just testing my new application" },
 ]
 
+export default function ContinuousSlider() {
+  const [value, setValue] = React.useState<number>(0)
+  const [paused, setPaused] = React.useState(false)
+  const handleChange = (event: Event, newValue: number | number[]) => {
+    setValue(newValue as number)
+  }
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Box sx={{ width: "100%", overflow: "hidden" }}>
+        <Stack
+          spacing={3}
+          direction="row"
+          sx={{ ml: 2, pr: 5 }}
+          alignItems="center"
+        >
+          <IconButton
+            aria-label={paused ? "play" : "pause"}
+            onClick={() => setPaused(!paused)}
+          >
+            {paused ? (
+              <PlayArrowIcon
+                sx={{ fontSize: "3rem", width: 35, height: 35 }}
+                htmlColor={theme.palette.primary.main}
+              />
+            ) : (
+              <PauseIcon
+                sx={{ fontSize: "3rem", width: 35, height: 35 }}
+                htmlColor={theme.palette.primary.main}
+              />
+            )}
+          </IconButton>
+          {/* <PlayArrowIcon sx={{ width: 35, height: 35 }} /> */}
+
+          <Slider aria-label="Volume" value={value} onChange={handleChange} />
+        </Stack>
+      </Box>
+    </ThemeProvider>
+  )
+}
 export const Body = () => {
   const { messages, input, handleInputChange, handleSubmit, setMessages } =
     useChat()
@@ -181,7 +229,8 @@ export const Body = () => {
                       </div>
 
                       <div className=" w-full   leading-relaxed text-sm   font-medium">
-                        {m.content}
+                        {/* {m.content} */}
+                        <ContinuousSlider />
                       </div>
                     </Stack>
                   </div>

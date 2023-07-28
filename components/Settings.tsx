@@ -43,14 +43,6 @@ const MenuProps = {
   },
 }
 
-function getStyles(name: string, personName: string[], theme: Theme) {
-  return {
-    fontWeight:
-      personName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  }
-}
 export function BasicSelect() {
   const [age, setAge] = React.useState("")
 
@@ -100,7 +92,6 @@ export function BasicSelect() {
           variant="outlined"
           color="primary"
           value={age}
-          //   sx={{ overflow: "auto", maxHeight: "3vh" }}
           label="Age"
           MenuProps={MenuProps}
           onChange={handleChange}
