@@ -9,6 +9,8 @@ import {
   Container,
   Avatar,
   TextField,
+  FormControl,
+  FormHelperText,
   Button,
   makeStyles,
   Tooltip,
@@ -24,10 +26,31 @@ import InputLabel from "@mui/material/InputLabel"
 import MenuItem from "@mui/material/MenuItem"
 
 import Select, { SelectChangeEvent } from "@mui/material/Select"
-import { FormControl, FormHelperText } from "@mui/material"
 
 import { styled } from "@mui/material"
+import { Theme, useTheme } from "@mui/material/styles"
 
+const ITEM_HEIGHT = 48
+const ITEM_PADDING_TOP = 8
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 150,
+      background: "#1E004A",
+      color: theme.palette.primary.main,
+    },
+  },
+}
+
+function getStyles(name: string, personName: string[], theme: Theme) {
+  return {
+    fontWeight:
+      personName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  }
+}
 export function BasicSelect() {
   const [age, setAge] = React.useState("")
 
@@ -77,96 +100,23 @@ export function BasicSelect() {
           variant="outlined"
           color="primary"
           value={age}
+          //   sx={{ overflow: "auto", maxHeight: "3vh" }}
           label="Age"
+          MenuProps={MenuProps}
           onChange={handleChange}
         >
           <MenuItem value={10}>Bella</MenuItem>
           <MenuItem value={20}>Adam</MenuItem>
           <MenuItem value={30}>Antoni</MenuItem>
+          <MenuItem value={30}>Antoni</MenuItem>
+          <MenuItem value={30}>Antoni</MenuItem>
+          <MenuItem value={30}>Antoni</MenuItem>
+          <MenuItem value={30}>Antoni</MenuItem>
+          <MenuItem value={30}>Antoni</MenuItem>
+          <MenuItem value={30}>Antoni</MenuItem>
         </Select>
       </FormControl>
     </Box>
-  )
-}
-
-const currencies = [
-  {
-    value: "gpt3.5",
-    label: "GPT-3.5",
-  },
-  {
-    value: "gpt4",
-    label: "GPT-4",
-  },
-]
-
-const HelperText = styled(FormHelperText)({
-  // color: `${theme.palette.border.main}`, // Specify the desired helper text color
-  color: theme.palette.primary.main,
-})
-
-export function SelectTextFields() {
-  return (
-    <ThemeProvider theme={theme}>
-      <Box
-        component="form"
-        sx={{
-          "& .MuiTextField-root": {
-            m: 1,
-            width: "25ch",
-
-            color: theme.palette.primary.main,
-          },
-
-          "& label": {
-            color: theme.palette.primary.main,
-          },
-
-          "& .MuiInputBase-input": {
-            color: theme.palette.primary.main,
-          },
-
-          "& label.Mui-focused": {
-            transition: "all 0.3s ease-in-out",
-          },
-          "& .MuiInput-underline:after": {
-            transition: "all 0.3s ease-in-out",
-            borderBottomColor: theme.palette.border.main,
-          },
-
-          "& fieldset": {
-            transition: "all 0.3s ease-in-out",
-            borderColor: theme.palette.border.main,
-          },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <div>
-          <TextField
-            id="outlined-select-currency"
-            select
-            label="Model"
-            defaultValue="gpt3.5"
-            helperText={<HelperText>Please select your GPT model</HelperText>}
-            SelectProps={{
-              IconComponent: ({ className }) => (
-                <ArrowDropDownIcon
-                  className={className}
-                  style={{ color: theme.palette.primary.main }}
-                />
-              ),
-            }}
-          >
-            {currencies.map(option => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
-        </div>
-      </Box>
-    </ThemeProvider>
   )
 }
 
