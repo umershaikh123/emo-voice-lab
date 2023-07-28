@@ -1,8 +1,8 @@
-const NavList = [
-    {
-        pageName: "Home",
-        link : "/Home"
-    },
+const NavList: [] = [
+    // {
+    //     pageName: "",
+    //     link : "/"
+    // },
  
 
 

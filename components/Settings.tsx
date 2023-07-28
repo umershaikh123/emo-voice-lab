@@ -18,6 +18,7 @@ import {
   Tooltip,
   Slider,
   Radio,
+  NativeSelect,
   Stack,
 } from "@mui/material"
 import { ThemeProvider } from "@mui/material"
@@ -46,7 +47,72 @@ const MenuProps = {
     },
   },
 }
+export function NativeSelectDemo() {
+  return (
+    <Box
+      component="form"
+      sx={{
+        width: "20ch",
+        "& .MuiTextField-root": {
+          color: theme.palette.primary.main,
+        },
+        ".MuiSelect-icon": {
+          color: theme.palette.primary.main,
+        },
 
+        "& label": {
+          color: theme.palette.primary.main,
+        },
+
+        "& .MuiInputBase-input": {
+          color: theme.palette.primary.main,
+        },
+
+        "& label.Mui-focused": {
+          transition: "all 0.3s ease-in-out",
+        },
+        "& .MuiInput-underline:after": {
+          transition: "all 0.3s ease-in-out",
+          borderBottomColor: theme.palette.border.main,
+        },
+
+        "& fieldset": {
+          transition: "all 0.3s ease-in-out",
+          borderColor: theme.palette.border.main,
+        },
+      }}
+    >
+      <FormControl fullWidth>
+        <InputLabel
+          htmlFor="uncontrolled-native"
+          variant="outlined"
+          color="primary"
+        >
+          Age
+        </InputLabel>
+        <NativeSelect
+          variant="outlined"
+          color="primary"
+          defaultValue={30}
+          inputProps={{
+            name: "age",
+            id: "uncontrolled-native",
+          }}
+        >
+          <MenuItem value={10}>Bella</MenuItem>
+          <MenuItem value={20}>Adam</MenuItem>
+          <MenuItem value={30}>Antoni</MenuItem>
+          <MenuItem value={30}>Antoni</MenuItem>
+          <MenuItem value={30}>Antoni</MenuItem>
+          <MenuItem value={30}>Antoni</MenuItem>
+          <MenuItem value={30}>Antoni</MenuItem>
+          <MenuItem value={30}>Antoni</MenuItem>
+          <MenuItem value={30}>Antoni</MenuItem>
+        </NativeSelect>
+      </FormControl>
+    </Box>
+  )
+}
 export function BasicSelect() {
   const [age, setAge] = React.useState("")
 
@@ -596,6 +662,7 @@ export const Settings = () => {
 
             {/* <SelectTextFields /> */}
             <BasicSelect />
+            {/* <NativeSelectDemo /> */}
           </div>
 
           <div>

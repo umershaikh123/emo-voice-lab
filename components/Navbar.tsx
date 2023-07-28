@@ -24,12 +24,12 @@ import { theme } from "@/theme/theme"
 
 import { NavbarLinks } from "@/constants/types"
 import { NavList } from "@/constants"
-
+import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 export const Navbar = () => {
   const settings = [
     {
-      name: "Logout",
-      url: "/api/auth/logout",
+      name: "user",
+      url: "/",
     },
   ]
 
@@ -179,7 +179,7 @@ export const Navbar = () => {
               >
                 EmoVoiceLabs
               </Typography>
-              {/* <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+              <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
                 {NavList.map(page => (
                   <>
                     <Link href={page.link}>
@@ -200,24 +200,33 @@ export const Navbar = () => {
                     </Link>
                   </>
                 ))}
-              </Box> */}
+              </Box>
 
-              {/* <Box
+              <Box
                 sx={{
                   flexGrow: 0,
+                  justifyContent: "flex-end",
+                  alignItems: "center",
                 }}
               >
-               <Tooltip title="Open settings">
+                <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar
+                    {/* <Avatar
                       alt="profile"
-                      // src="/Images/Customer.svg"
+                      src="/Images/Customer.svg"
                       // src={user?.picture || '/Images/Customer.svg'}
                       sx={{ width: "50px", height: "50px" }}
+                    /> */}
+                    <AccountCircleIcon
+                      sx={{
+                        width: "50px",
+                        height: "50px",
+                        color: theme.palette.primary.main,
+                      }}
                     />
                   </IconButton>
                 </Tooltip>
-                <Menu
+                {/* <Menu
                   MenuListProps={{
                     sx: {
                       backgroundColor: theme.palette.background.default,
@@ -246,8 +255,8 @@ export const Navbar = () => {
                   }}
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
-                >
-                  {settings.map(setting => (
+                > 
+                 {settings.map(setting => (
                     <MenuItem
                       key={setting.name}
                       onClick={handleCloseUserMenu}
@@ -263,11 +272,10 @@ export const Navbar = () => {
                       <Button variant="text" color="primary" href={setting.url}>
                         {setting.name}
                       </Button>
-                      {/* <Typography textAlign="center">{setting}</Typography>  
                     </MenuItem>
-                  ))}
-                </Menu>
-              </Box> */}
+                  ))}  
+                </Menu> */}
+              </Box>
             </Toolbar>
           </Container>
         </AppBar>
