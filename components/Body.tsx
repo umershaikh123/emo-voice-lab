@@ -15,6 +15,7 @@ import {
   TextField,
   Stack,
   Slider,
+  Modal,
 } from "@mui/material"
 import { ThemeProvider } from "@mui/material"
 import { theme } from "@/theme/theme"
@@ -85,9 +86,6 @@ const Messages: Message[] = [
   { id: "2", role: "assistant", content: "Hello! How can I assist you today?" },
   { id: "3", role: "user", content: "just testing my new application" },
   { id: "2", role: "assistant", content: "Hello! How can I assist you today?" },
-  { id: "3", role: "user", content: "just testing my new application" },
-  { id: "2", role: "assistant", content: "Hello! How can I assist you today?" },
-  { id: "3", role: "user", content: "just testing my new application" },
 ]
 
 export default function ContinuousSlider() {
