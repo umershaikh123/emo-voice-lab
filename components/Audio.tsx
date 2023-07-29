@@ -117,7 +117,6 @@ const AudioPlayer = (props: ApiProps) => {
 
     const handleLoadedMetadata = () => {
       setDuration(audioElement?.duration || 0.0)
-      // console.log(audioElement?.duration)
     }
 
     const handleEnded = () => {
@@ -136,7 +135,6 @@ const AudioPlayer = (props: ApiProps) => {
   }, [audioUrl])
 
   if (loading) {
-    // Render the spinner while loading
     return (
       <div>
         <BeatLoader
@@ -147,83 +145,6 @@ const AudioPlayer = (props: ApiProps) => {
       </div>
     )
   }
-
-  //   const audioRef = useRef<HTMLAudioElement>(null)
-  //   const [audioUrl, setAudioUrl] = useState<string | null>(null)
-  //   const [isPlaying, setPlaying] = useState(false)
-  //   const [currentTime, setCurrentTime] = useState(0)
-  //   const [duration, setDuration] = useState(0)
-
-  //   useEffect(() => {
-  //     // Fetch audio URL when the component mounts
-  //     const fetchAudioUrl = async () => {
-  //       const url = await callElevenLabsTextToSpeechAPI(text) // Replace with your API call
-  //       setAudioUrl(url || null)
-  //     }
-  //     fetchAudioUrl()
-  //   }, [])
-
-  //   useEffect(() => {
-  //     const audioElement = audioRef.current
-
-  //     const handleTimeUpdate = () => {
-  //       setCurrentTime(audioElement?.currentTime || 0)
-  //     }
-
-  //     const handleLoadedMetadata = () => {
-  //       setDuration(audioElement?.duration || 0)
-  //     }
-
-  //     audioElement?.addEventListener("timeupdate", handleTimeUpdate)
-  //     audioElement?.addEventListener("loadedmetadata", handleLoadedMetadata)
-
-  //     return () => {
-  //       audioElement?.removeEventListener("timeupdate", handleTimeUpdate)
-  //       audioElement?.removeEventListener("loadedmetadata", handleLoadedMetadata)
-  //     }
-  //   }, [])
-
-  //   const handlePlayPause = useCallback(() => {
-  //     const audioElement = audioRef.current
-  //     if (audioElement?.paused) {
-  //       audioElement?.play()
-  //     } else {
-  //       audioElement?.pause()
-  //     }
-  //     setPlaying(!isPlaying)
-  //   }, [isPlaying])
-
-  //   const handleSliderChange = useCallback(
-  //     (_event: Event, value: number | number[]) => {
-  //       const newValue = value as number
-  //       setCurrentTime(newValue)
-  //       audioRef.current!.currentTime = newValue
-  //     },
-  //     []
-  //   )
-
-  //   // Smoothly update the slider position based on the audio's current time
-  //   useEffect(() => {
-  //     if (isPlaying) {
-  //       const audioElement = audioRef.current
-  //       const updateTime = () => {
-  //         setCurrentTime(audioElement?.currentTime || 0)
-  //         requestAnimationFrame(updateTime)
-  //       }
-  //       requestAnimationFrame(updateTime)
-  //     }
-  //   }, [isPlaying])
-
-  //   function formatTime(timeInSeconds: number): string {
-  //     const hours = Math.floor(timeInSeconds / 3600)
-  //     const minutes = Math.floor((timeInSeconds % 3600) / 60)
-  //     const seconds = Math.floor(timeInSeconds % 60)
-
-  //     return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
-  //       2,
-  //       "0"
-  //     )}:${String(seconds).padStart(2, "0")}`
-  //   }
 
   function formatTime(timeInSeconds: number): string {
     const minutes = Math.floor(timeInSeconds / 60)

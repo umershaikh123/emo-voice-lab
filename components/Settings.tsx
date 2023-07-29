@@ -39,13 +39,6 @@ import { useApiContext, ApiProvider } from "@/hooks/ApiContext"
 import { styled } from "@mui/material"
 import { Theme, useTheme } from "@mui/material/styles"
 
-// import {
-//   useModelId,
-//   useAccent,
-//   useStability,
-//   useSimilarityBoost,
-// } from "@/hooks"
-
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
 const MenuProps = {
@@ -61,7 +54,6 @@ const MenuProps = {
 
 export function BasicSelect() {
   const { Accent, setAccent } = useApiContext()
-  // const { Accent, setAccent } = useAccent("21m00Tcm4TlvDq8ikWAM")
 
   console.log(Accent)
 
@@ -221,29 +213,9 @@ export const Settings = () => {
   const handleOpen2 = () => setOpen2(true)
   const handleClose2 = () => setOpen2(false)
 
-  // const model_id = {
-  //   1: "eleven_multilingual_v1",
-  //   2: "eleven_monolingual_v1",
-  // }
-
-  // const { model_id, setModel_id } = useModelId("eleven_monolingual_v1")
-
-  // const {model_id, setModel_id} = useModelId(
-  //   "eleven_monolingual_v1"
-  // )
-
   const handleChangeRadio = (event: React.ChangeEvent<HTMLInputElement>) => {
     setModel_id(event.target.value)
   }
-
-  // const { stability, setStability } = useStability(0.5)
-  // const { similarity_boost, setSimilarity_boost } = useSimilarityBoost(0.5)
-
-  // const [stability, setStability ] = React.useState<number>(0.5)
-  // const [similarity_boost, setSimilarity_boost] = React.useState<number>(0.5)
-
-  // console.log("stability", stability)
-  // console.log("similarity_boost", similarity_boost)
 
   const handleChangeLow = (event: Event, newValue: number | number[]) => {
     setSimilarity_boost(newValue as number)
@@ -275,7 +247,6 @@ export const Settings = () => {
               </Typography>
               <Divider
                 sx={{
-                  // border: `1px solid ${theme.palette.primary.main}`,
                   mt: 1,
                   border: `1px solid ${theme.palette.border.main}`,
                 }}
@@ -365,13 +336,6 @@ export const Settings = () => {
                   </div>
                 </Stack>
               </Stack>
-              {/* <Button
-                variant="outlined"
-                color="primary"
-                sx={{ minWidth: "7rem", mt: 4 }}
-              >
-                Apply
-              </Button> */}
             </Box>
           </Modal>
         </div>
@@ -397,22 +361,7 @@ export const Settings = () => {
           </div>
 
           <div>
-            {/* <Button
-              variant="outlined"
-              color="primary"
-              endIcon={<ArrowDropDownIcon />}
-              sx={{
-                fontSize: "14px",
-                textTransform: "capitalize",
-                minWidth: "10rem",
-              }}
-            >
-              character Voice
-            </Button> */}
-
-            {/* <SelectTextFields /> */}
             <BasicSelect />
-            {/* <NativeSelectDemo /> */}
           </div>
 
           <div>

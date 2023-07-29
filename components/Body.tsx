@@ -113,12 +113,7 @@ const Messages: Message[] = [
     content: "prompt",
   },
 ]
-// {
-//   id: "1",
-//   role: "user",
-//   content: "prompt",
-// },
-// { id: "2", role: "assistant", content: "Type a sentence to get started" },
+
 export function ContinuousSlider() {
   const [value, setValue] = React.useState<number>(0)
   const [paused, setPaused] = React.useState(false)
@@ -152,7 +147,6 @@ export function ContinuousSlider() {
               />
             )}
           </IconButton>
-          {/* <PlayArrowIcon sx={{ width: 35, height: 35 }} /> */}
 
           <Slider aria-label="Volume" value={value} onChange={handleChange} />
         </Stack>
@@ -170,8 +164,6 @@ interface ApiProps {
 }
 
 export const Body = () => {
-  // const { messages, input, handleInputChange, handleSubmit, setMessages } =
-  //   useChat()
   const {
     model_id,
 
@@ -182,10 +174,6 @@ export const Body = () => {
   } = useApiContext()
   const [promptValue, setPromptValue] = React.useState("")
   const [messages, setMessages] = React.useState<Message[]>([])
-  // const [_model_id, setModel_id] = React.useState("eleven_monolingual_v1")
-  // const [_Accent, setAccent] = React.useState("21m00Tcm4TlvDq8ikWAM")
-  // const [_stability, setStability] = React.useState(0.5)
-  // const [_similarity_boost, setSimilarity_boost] = React.useState(0.5)
 
   const ref = useRef<HTMLDivElement | null>(null)
 
@@ -193,7 +181,6 @@ export const Body = () => {
     const Reveal = ref.current
 
     if (Reveal) {
-      // Animation using anime.js, only when loaded
       anime({
         targets: Reveal,
         opacity: [0, 1],
@@ -218,9 +205,6 @@ export const Body = () => {
       content: promptValue.trim(),
     }
 
-    // setMessages(prevMessages => [...prevMessages, userMessage])
-    // setPromptValue("")
-
     const assistantMessage: AssistantMessage = {
       role: "assistant",
       id: String(Date.now()), // You can use a better method to generate IDs
@@ -239,18 +223,6 @@ export const Body = () => {
     if (event.key === "Enter") {
       handleSubmit()
     }
-  }
-
-  // const audio = callElevenLabsTextToSpeechAPI(
-  //   "Hello! How can I assist you today?"
-  // )
-  // console.log(audio)
-
-  const handleButtonSubmit = async (event: any) => {
-    event.preventDefault()
-    // handleSubmit(event)
-
-    // setMessages(Messages)
   }
 
   const props: ApiProps = {
@@ -311,12 +283,6 @@ export const Body = () => {
                       }}
                     >
                       <div className=" ">
-                        {/* <Avatar
-                          alt="Remy Sharp"
-                          src={"/Images/Customer.svg"}
-                          //   src={user?.picture || '/Images/Customer.svg'}
-                          sx={{ width: 40, height: 40 }}
-                        /> */}
                         <AccountCircleIcon sx={{ width: 40, height: 40 }} />
                       </div>
 
@@ -345,15 +311,9 @@ export const Body = () => {
                           src={"/Images/Bot2.svg"}
                           sx={{ width: 40, height: 40 }}
                         />
-                        {/* <SmartToyIcon
-                          sx={{ width: 40, height: 40, color: "#CBC9C9" }}
-                        /> */}
                       </div>
 
                       <div className=" w-full   leading-relaxed text-sm   font-medium">
-                        {/* {m.content} */}
-                        {/* <ContinuousSlider /> */}
-
                         <AudioPlayer
                           text={m.content}
                           model_id={props.model_id}
@@ -369,7 +329,6 @@ export const Body = () => {
             ))}
           </Stack>
 
-          {/* end two buttons  */}
           <Stack
             direction="column"
             justifyContent="flex-end"
@@ -382,7 +341,7 @@ export const Body = () => {
               maxWidth: "100%",
             }}
           >
-            <form onSubmit={handleButtonSubmit} className="  w-full">
+            <form onSubmit={handleSubmit} className="  w-full">
               <CssTextField
                 label="Say something..."
                 maxRows={10}
@@ -392,8 +351,6 @@ export const Body = () => {
                 value={promptValue}
                 onChange={handlePromptChange}
                 onKeyDown={handleKeyDown}
-                // onSubmit={handleSubmit}
-                // sx={{ width: '100%' }}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment
