@@ -20,7 +20,7 @@ import {
 import { ThemeProvider } from "@mui/material"
 import { theme } from "@/theme/theme"
 import { Children, useEffect, useRef } from "react"
-
+import SmartToyIcon from "@mui/icons-material/SmartToy"
 import { useCompletion, useChat } from "ai/react"
 import { useRouter } from "next/navigation"
 import { useParams } from "next/navigation"
@@ -320,8 +320,8 @@ export const Body = () => {
                         <AccountCircleIcon sx={{ width: 40, height: 40 }} />
                       </div>
 
-                      <div className=" w-full   leading-relaxed text-sm   font-regular ">
-                        {m.content}
+                      <div className=" w-full leading-relaxed text-sm   font-semibold ">
+                        <p className=" ml-8">{m.content}</p>
                       </div>
                     </Stack>
                   </div>
@@ -342,9 +342,12 @@ export const Body = () => {
                       <div className=" ">
                         <Avatar
                           alt="Remy Sharp"
-                          src={"/Images/gptIcon.svg"}
+                          src={"/Images/Bot2.svg"}
                           sx={{ width: 40, height: 40 }}
                         />
+                        {/* <SmartToyIcon
+                          sx={{ width: 40, height: 40, color: "#CBC9C9" }}
+                        /> */}
                       </div>
 
                       <div className=" w-full   leading-relaxed text-sm   font-medium">

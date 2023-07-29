@@ -232,9 +232,6 @@ const AudioPlayer = (props: ApiProps) => {
     return `${String(minutes)}:${seconds.padStart(4, "0")}`
   }
 
-  // console.log("duration", duration)
-  // console.log("currentTime", currentTime)
-
   return (
     <div ref={ref}>
       <Box sx={{ width: "100%", overflow: "hidden" }}>
@@ -250,12 +247,21 @@ const AudioPlayer = (props: ApiProps) => {
             onEnded={() => setPlaying(false)}
           />
           {isPlaying ? (
-            <PauseIcon fontSize="large" onClick={handlePlayPause} />
+            <PauseIcon
+              fontSize="large"
+              onClick={handlePlayPause}
+              sx={{ color: "white" }}
+            />
           ) : (
-            <PlayArrowIcon fontSize="large" onClick={handlePlayPause} />
+            <PlayArrowIcon
+              fontSize="large"
+              onClick={handlePlayPause}
+              sx={{ color: "white" }}
+            />
           )}
 
           <Slider
+            sx={{ color: "white" }}
             value={currentTime}
             onChange={handleSliderChange}
             aria-labelledby="continuous-slider"
@@ -267,8 +273,8 @@ const AudioPlayer = (props: ApiProps) => {
               variant="body2"
               sx={{
                 fontSize: "16px",
-                fontWeight: "bold",
-                color: theme.palette.primary.main,
+                fontWeight: "regular",
+                color: "white",
               }}
             >
               {formatTime(currentTime)} / {formatTime(duration)}
