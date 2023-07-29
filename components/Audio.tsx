@@ -25,7 +25,15 @@ import { RingLoader, BeatLoader } from "react-spinners"
 import { theme } from "@/theme/theme"
 import anime from "animejs"
 
-const AudioPlayer: React.FC<{ text: string }> = ({ text }) => {
+interface ApiProps {
+  text: string
+  model_id: string
+  Accent: string
+  stability: number
+  similarity_boost: number
+}
+
+const AudioPlayer = (props: ApiProps) => {
   const audioRef = useRef<HTMLAudioElement>(null)
   const [audioUrl, setAudioUrl] = useState<string | null>(null)
   const [isPlaying, setPlaying] = useState(false)
@@ -35,6 +43,13 @@ const AudioPlayer: React.FC<{ text: string }> = ({ text }) => {
   const [loaded, setLoaded] = useState(false) // Add the loaded state
   const ref = useRef<HTMLDivElement | null>(null)
 
+  const Props: ApiProps = {
+    text: props.text,
+    model_id: props.model_id,
+    Accent: props.Accent,
+    stability: props.stability,
+    similarity_boost: props.similarity_boost,
+  }
   useEffect(() => {
     const Reveal = ref.current
 
@@ -61,7 +76,7 @@ const AudioPlayer: React.FC<{ text: string }> = ({ text }) => {
     // Fetch audio URL when the component mounts
     const fetchAudioUrl = async () => {
       try {
-        const url = await callElevenLabsTextToSpeechAPI(text) // Replace with your API call
+        const url = await callElevenLabsTextToSpeechAPI(Props) // Replace with your API call
         setAudioUrl(url || null)
       } catch (error) {
         console.error("Error fetching audio URL:", error)
@@ -102,7 +117,7 @@ const AudioPlayer: React.FC<{ text: string }> = ({ text }) => {
 
     const handleLoadedMetadata = () => {
       setDuration(audioElement?.duration || 0.0)
-      console.log(audioElement?.duration)
+      // console.log(audioElement?.duration)
     }
 
     const handleEnded = () => {
@@ -217,8 +232,8 @@ const AudioPlayer: React.FC<{ text: string }> = ({ text }) => {
     return `${String(minutes)}:${seconds.padStart(4, "0")}`
   }
 
-  console.log("duration", duration)
-  console.log("currentTime", currentTime)
+  // console.log("duration", duration)
+  // console.log("currentTime", currentTime)
 
   return (
     <div ref={ref}>

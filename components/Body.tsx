@@ -159,12 +159,25 @@ export function ContinuousSlider() {
     </ThemeProvider>
   )
 }
+
+interface ApiProps {
+  text: string
+  model_id: string
+  Accent: string
+  stability: number
+  similarity_boost: number
+}
+
 export const Body = () => {
   // const { messages, input, handleInputChange, handleSubmit, setMessages } =
   //   useChat()
 
   const [messages, setMessages] = React.useState<Message[]>([])
   const [promptValue, setPromptValue] = React.useState("")
+  const [_model_id, setModel_id] = React.useState("eleven_monolingual_v1")
+  const [_Accent, setAccent] = React.useState("21m00Tcm4TlvDq8ikWAM")
+  const [_stability, setStability] = React.useState(0.5)
+  const [_similarity_boost, setSimilarity_boost] = React.useState(0.5)
 
   const ref = useRef<HTMLDivElement | null>(null)
 
@@ -230,6 +243,14 @@ export const Body = () => {
     // handleSubmit(event)
 
     // setMessages(Messages)
+  }
+
+  const props: ApiProps = {
+    text: promptValue,
+    model_id: _model_id,
+    Accent: _Accent,
+    stability: _stability,
+    similarity_boost: _similarity_boost,
   }
 
   return (
@@ -322,7 +343,13 @@ export const Body = () => {
                         {/* {m.content} */}
                         {/* <ContinuousSlider /> */}
 
-                        <AudioPlayer text={m.content} />
+                        <AudioPlayer
+                          text={m.content}
+                          model_id={props.model_id}
+                          Accent={props.Accent}
+                          stability={props.stability}
+                          similarity_boost={props.similarity_boost}
+                        />
                       </div>
                     </Stack>
                   </div>

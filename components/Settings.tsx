@@ -47,78 +47,132 @@ const MenuProps = {
     },
   },
 }
-export function NativeSelectDemo() {
-  return (
-    <Box
-      component="form"
-      sx={{
-        width: "20ch",
-        "& .MuiTextField-root": {
-          color: theme.palette.primary.main,
-        },
-        ".MuiSelect-icon": {
-          color: theme.palette.primary.main,
-        },
+// export function NativeSelectDemo() {
+//   return (
+//     <Box
+//       component="form"
+//       sx={{
+//         width: "20ch",
+//         "& .MuiTextField-root": {
+//           color: theme.palette.primary.main,
+//         },
+//         ".MuiSelect-icon": {
+//           color: theme.palette.primary.main,
+//         },
 
-        "& label": {
-          color: theme.palette.primary.main,
-        },
+//         "& label": {
+//           color: theme.palette.primary.main,
+//         },
 
-        "& .MuiInputBase-input": {
-          color: theme.palette.primary.main,
-        },
+//         "& .MuiInputBase-input": {
+//           color: theme.palette.primary.main,
+//         },
 
-        "& label.Mui-focused": {
-          transition: "all 0.3s ease-in-out",
-        },
-        "& .MuiInput-underline:after": {
-          transition: "all 0.3s ease-in-out",
-          borderBottomColor: theme.palette.border.main,
-        },
+//         "& label.Mui-focused": {
+//           transition: "all 0.3s ease-in-out",
+//         },
+//         "& .MuiInput-underline:after": {
+//           transition: "all 0.3s ease-in-out",
+//           borderBottomColor: theme.palette.border.main,
+//         },
 
-        "& fieldset": {
-          transition: "all 0.3s ease-in-out",
-          borderColor: theme.palette.border.main,
-        },
-      }}
-    >
-      <FormControl fullWidth>
-        <InputLabel
-          htmlFor="uncontrolled-native"
-          variant="outlined"
-          color="primary"
-        >
-          Age
-        </InputLabel>
-        <NativeSelect
-          variant="outlined"
-          color="primary"
-          defaultValue={30}
-          inputProps={{
-            name: "age",
-            id: "uncontrolled-native",
-          }}
-        >
-          <MenuItem value={10}>Bella</MenuItem>
-          <MenuItem value={20}>Adam</MenuItem>
-          <MenuItem value={30}>Antoni</MenuItem>
-          <MenuItem value={30}>Antoni</MenuItem>
-          <MenuItem value={30}>Antoni</MenuItem>
-          <MenuItem value={30}>Antoni</MenuItem>
-          <MenuItem value={30}>Antoni</MenuItem>
-          <MenuItem value={30}>Antoni</MenuItem>
-          <MenuItem value={30}>Antoni</MenuItem>
-        </NativeSelect>
-      </FormControl>
-    </Box>
-  )
-}
+//         "& fieldset": {
+//           transition: "all 0.3s ease-in-out",
+//           borderColor: theme.palette.border.main,
+//         },
+//       }}
+//     >
+//       <FormControl fullWidth>
+//         <InputLabel
+//           htmlFor="uncontrolled-native"
+//           variant="outlined"
+//           color="primary"
+//         >
+//           Age
+//         </InputLabel>
+//         <NativeSelect
+//           variant="outlined"
+//           color="primary"
+//           defaultValue={30}
+//           inputProps={{
+//             name: "age",
+//             id: "uncontrolled-native",
+//           }}
+//         >
+//           <MenuItem value={10}>Bella</MenuItem>
+//           <MenuItem value={20}>Adam</MenuItem>
+//           <MenuItem value={30}>Antoni</MenuItem>
+//           <MenuItem value={30}>Antoni</MenuItem>
+//           <MenuItem value={30}>Antoni</MenuItem>
+//           <MenuItem value={30}>Antoni</MenuItem>
+//           <MenuItem value={30}>Antoni</MenuItem>
+//           <MenuItem value={30}>Antoni</MenuItem>
+//           <MenuItem value={30}>Antoni</MenuItem>
+//         </NativeSelect>
+//       </FormControl>
+//     </Box>
+//   )
+// }
 export function BasicSelect() {
-  const [age, setAge] = React.useState("")
+  const [accent, setaccent] = React.useState("21m00Tcm4TlvDq8ikWAM")
+
+  console.log(accent)
 
   const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string)
+    setaccent(event.target.value as string)
   }
+
+  const voiceIds = [
+    {
+      name: "Rachel",
+      value: "21m00Tcm4TlvDq8ikWAM",
+    },
+
+    {
+      name: "Clyde",
+      value: "2EiwWnXFnvU5JabPnv8n",
+    },
+
+    {
+      name: "Domi",
+      value: "AZnzlk1XvdvUeBnXmlld",
+    },
+
+    {
+      name: "Dave",
+      value: "CYw3kZ02Hs0563khs1Fj",
+    },
+
+    {
+      name: "Fin",
+      value: "D38z5RcWu1voky8WS1ja",
+    },
+
+    {
+      name: "Bella",
+      value: "EXAVITQu4vr4xnSDxMaL",
+    },
+
+    {
+      name: "Antoni",
+      value: "ErXwobaYiN019PkySvjV",
+    },
+
+    {
+      name: "Thomas",
+      value: "GBv7mTt0atIp3Br8iCZE",
+    },
+
+    {
+      name: "Charlie",
+      value: "IKne3meq5aSn9XLyUdCD",
+    },
+
+    {
+      name: "Emily",
+      value: "LcfcDJNUP1GQjkzn1xUU",
+    },
+  ]
 
   return (
     <Box
@@ -161,20 +215,16 @@ export function BasicSelect() {
           id="demo-simple-select"
           variant="outlined"
           color="primary"
-          value={age}
-          label="Age"
+          value={accent}
+          label="accent"
           MenuProps={MenuProps}
           onChange={handleChange}
         >
-          <MenuItem value={10}>Bella</MenuItem>
-          <MenuItem value={20}>Adam</MenuItem>
-          <MenuItem value={30}>Antoni</MenuItem>
-          <MenuItem value={30}>Antoni</MenuItem>
-          <MenuItem value={30}>Antoni</MenuItem>
-          <MenuItem value={30}>Antoni</MenuItem>
-          <MenuItem value={30}>Antoni</MenuItem>
-          <MenuItem value={30}>Antoni</MenuItem>
-          <MenuItem value={30}>Antoni</MenuItem>
+          {voiceIds.map((voiceId, index) => (
+            <MenuItem key={index} value={voiceId.value}>
+              {voiceId.name}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
     </Box>
@@ -195,280 +245,294 @@ const style = {
   p: 4,
 }
 
-export function SettingsModal() {
-  const [open2, setOpen2] = React.useState(false)
-  const handleOpen2 = () => setOpen2(true)
-  const handleClose2 = () => setOpen2(false)
-  const [selectedValue, setSelectedValue] = React.useState("a")
+// export function SettingsModal() {
+//   const [open2, setOpen2] = React.useState(false)
+//   const handleOpen2 = () => setOpen2(true)
+//   const handleClose2 = () => setOpen2(false)
 
-  const handleChangeRadio = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedValue(event.target.value)
-  }
+//   const model_id = {
+//     1 : "eleven_multilingual_v1" ,
+//     2 : "eleven_monolingual_v1"
+//   }
 
-  return (
-    <div>
-      <Button onClick={handleOpen2}>Open modal</Button>
-      <Modal
-        open={open2}
-        onClose={handleClose2}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography
-            id="modal-modal-title"
-            sx={{
-              fontSize: "24px",
-              fontWeight: "bold",
-              color: theme.palette.primary.main,
-            }}
-          >
-            Choose a Model
-          </Typography>
+//   const [_model_id, setModel_id] = React.useState("eleven_monolingual_v1")
+//   const [_Accent, setAccent] = React.useState("21m00Tcm4TlvDq8ikWAM")
+//   const [_stability, setStability] = React.useState(0.5)
+//   const [_similarity_boost, setSimilarity_boost] = React.useState(0.5)
 
-          <Box
-            sx={{
-              border: `1px solid ${theme.palette.border.main}`,
-              padding: "10px",
-              borderRadius: "10px",
-              position: "relative",
-              py: 3,
-              mt: 3,
-              px: 5,
-            }}
-          >
-            <Radio
-              checked={selectedValue === "a"}
-              onChange={handleChangeRadio}
-              value="a"
-              name="radio-buttons"
-              inputProps={{ "aria-label": "A" }}
-              sx={{
-                position: "absolute",
-                color: theme.palette.primary.main,
-                top: "30px",
-                right: "20px",
-                "& .MuiSvgIcon-root": {
-                  fontSize: 28,
-                },
-              }}
-            />
-            <Stack
-              direction="column"
-              justifyContent="flex-start"
-              alignItems="flex-start"
-              spacing={5}
-              sx={{ mt: 1, width: "100%" }}
-            >
-              <Stack
-                direction="column"
-                justifyContent="flex-start"
-                alignItems="flex-start"
-                spacing={3}
-                sx={{ mt: 1, width: "100%" }}
-              >
-                <Typography
-                  sx={{
-                    fontSize: "16px",
-                    fontWeight: "bold",
-                    color: theme.palette.primary.main,
-                  }}
-                >
-                  Eleven English v1
-                </Typography>
+//   // const [selectedValue, setSelectedValue] = React.useState("eleven_multilingual_v1  eleven_monolingual_v1")
+//   const [selectedValue, setSelectedValue] = React.useState("eleven_monolingual_v1")
+//   // eleven_monolingual_v1
 
-                <Typography
-                  sx={{
-                    fontSize: "14px",
-                    fontWeight: "medium",
-                    color: theme.palette.primary.main,
-                  }}
-                >
-                  Use our standard English language model to generate speech in
-                  a variety of voices, styles and moods.
-                </Typography>
+//   const handleChangeRadio = (event: React.ChangeEvent<HTMLInputElement>) => {
+//     setSelectedValue(event.target.value)
+//   }
 
-                <div className="flex space-x-3 items-center ">
-                  <Typography
-                    sx={{
-                      fontSize: "14px",
-                      fontWeight: "semiBold",
-                      color: theme.palette.primary.main,
-                    }}
-                  >
-                    Tasks :
-                  </Typography>
+//   return (
+//     <div>
+//       <Button onClick={handleOpen2}>Open modal</Button>
+//       <Modal
+//         open={open2}
+//         onClose={handleClose2}
+//         aria-labelledby="modal-modal-title"
+//         aria-describedby="modal-modal-description"
+//       >
+//         <Box sx={style}>
+//           <Typography
+//             id="modal-modal-title"
+//             sx={{
+//               fontSize: "24px",
+//               fontWeight: "bold",
+//               color: theme.palette.primary.main,
+//             }}
+//           >
+//             Choose a Model
+//           </Typography>
 
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    sx={{
-                      minWidth: "5rem",
-                      textTransform: "capitalize",
-                      fontSize: "12px",
-                    }}
-                  >
-                    Text to Speech
-                  </Button>
-                </div>
+//           <Box
+//             sx={{
+//               border: `1px solid ${theme.palette.border.main}`,
+//               padding: "10px",
+//               borderRadius: "10px",
+//               position: "relative",
+//               py: 3,
+//               mt: 3,
+//               px: 5,
+//             }}
+//           >
+//             <Radio
+//               checked={selectedValue === "eleven_monolingual_v1"}
+//               onChange={handleChangeRadio}
+//               value="a"
+//               name="radio-buttons"
+//               inputProps={{ "aria-label": "A" }}
+//               sx={{
+//                 position: "absolute",
+//                 color: theme.palette.primary.main,
+//                 top: "30px",
+//                 right: "20px",
+//                 "& .MuiSvgIcon-root": {
+//                   fontSize: 28,
+//                 },
+//               }}
+//             />
+//             <Stack
+//               direction="column"
+//               justifyContent="flex-start"
+//               alignItems="flex-start"
+//               spacing={5}
+//               sx={{ mt: 1, width: "100%" }}
+//             >
+//               <Stack
+//                 direction="column"
+//                 justifyContent="flex-start"
+//                 alignItems="flex-start"
+//                 spacing={3}
+//                 sx={{ mt: 1, width: "100%" }}
+//               >
+//                 <Typography
+//                   sx={{
+//                     fontSize: "16px",
+//                     fontWeight: "bold",
+//                     color: theme.palette.primary.main,
+//                   }}
+//                 >
+//                   Eleven English v1
+//                 </Typography>
 
-                <div className="flex space-x-3 items-center ">
-                  <Typography
-                    sx={{
-                      fontSize: "14px",
-                      fontWeight: "semiBold",
-                      color: theme.palette.primary.main,
-                    }}
-                  >
-                    Languages:
-                  </Typography>
+//                 <Typography
+//                   sx={{
+//                     fontSize: "14px",
+//                     fontWeight: "medium",
+//                     color: theme.palette.primary.main,
+//                   }}
+//                 >
+//                   Use our standard English language model to generate speech in
+//                   a variety of voices, styles and moods.
+//                 </Typography>
 
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    sx={{
-                      minWidth: "5rem",
-                      textTransform: "capitalize",
-                      fontSize: "12px",
-                    }}
-                  >
-                    English
-                  </Button>
-                </div>
-              </Stack>
-            </Stack>
-          </Box>
+//                 <div className="flex space-x-3 items-center ">
+//                   <Typography
+//                     sx={{
+//                       fontSize: "14px",
+//                       fontWeight: "semiBold",
+//                       color: theme.palette.primary.main,
+//                     }}
+//                   >
+//                     Tasks :
+//                   </Typography>
 
-          <Box
-            sx={{
-              border: `1px solid ${theme.palette.border.main}`,
-              padding: "10px",
-              borderRadius: "10px",
-              position: "relative",
-              py: 3,
-              mt: 3,
-              px: 5,
-            }}
-          >
-            <Radio
-              checked={selectedValue === "b"}
-              onChange={handleChangeRadio}
-              value="b"
-              name="radio-buttons"
-              inputProps={{ "aria-label": "B" }}
-              sx={{
-                position: "absolute",
-                top: "30px",
-                right: "20px",
-                color: theme.palette.primary.main,
-                "& .MuiSvgIcon-root": {
-                  fontSize: 28,
-                },
-              }}
-            />
-            <Stack
-              direction="column"
-              justifyContent="flex-start"
-              alignItems="flex-start"
-              spacing={5}
-              sx={{ mt: 1, width: "100%" }}
-            >
-              <Stack
-                direction="column"
-                justifyContent="flex-start"
-                alignItems="flex-start"
-                spacing={3}
-                sx={{ mt: 1, width: "100%" }}
-              >
-                <Typography
-                  sx={{
-                    fontSize: "16px",
-                    fontWeight: "bold",
-                    color: theme.palette.primary.main,
-                  }}
-                >
-                  Eleven Multilingual v1
-                </Typography>
+//                   <Button
+//                     variant="outlined"
+//                     color="primary"
+//                     sx={{
+//                       minWidth: "5rem",
+//                       textTransform: "capitalize",
+//                       fontSize: "12px",
+//                     }}
+//                   >
+//                     Text to Speech
+//                   </Button>
+//                 </div>
 
-                <Typography
-                  sx={{
-                    fontSize: "14px",
-                    fontWeight: "medium",
-                    color: theme.palette.primary.main,
-                  }}
-                >
-                  Use our standard English language model to generate speech in
-                  a variety of voices, styles and moods.
-                </Typography>
+//                 <div className="flex space-x-3 items-center ">
+//                   <Typography
+//                     sx={{
+//                       fontSize: "14px",
+//                       fontWeight: "semiBold",
+//                       color: theme.palette.primary.main,
+//                     }}
+//                   >
+//                     Languages:
+//                   </Typography>
 
-                <div className="flex space-x-3 items-center ">
-                  <Typography
-                    sx={{
-                      fontSize: "14px",
-                      fontWeight: "semiBold",
-                      color: theme.palette.primary.main,
-                    }}
-                  >
-                    Tasks :
-                  </Typography>
+//                   <Button
+//                     variant="outlined"
+//                     color="primary"
+//                     sx={{
+//                       minWidth: "5rem",
+//                       textTransform: "capitalize",
+//                       fontSize: "12px",
+//                     }}
+//                   >
+//                     English
+//                   </Button>
+//                 </div>
+//               </Stack>
+//             </Stack>
+//           </Box>
 
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    sx={{
-                      minWidth: "5rem",
-                      textTransform: "capitalize",
-                      fontSize: "12px",
-                    }}
-                  >
-                    Text to Speech
-                  </Button>
-                </div>
+//           <Box
+//             sx={{
+//               border: `1px solid ${theme.palette.border.main}`,
+//               padding: "10px",
+//               borderRadius: "10px",
+//               position: "relative",
+//               py: 3,
+//               mt: 3,
+//               px: 5,
+//             }}
+//           >
+//             <Radio
+//               checked={selectedValue === "eleven_multilingual_v1"}
+//               onChange={handleChangeRadio}
+//               value="b"
+//               name="radio-buttons"
+//               inputProps={{ "aria-label": "B" }}
+//               sx={{
+//                 position: "absolute",
+//                 top: "30px",
+//                 right: "20px",
+//                 color: theme.palette.primary.main,
+//                 "& .MuiSvgIcon-root": {
+//                   fontSize: 28,
+//                 },
+//               }}
+//             />
+//             <Stack
+//               direction="column"
+//               justifyContent="flex-start"
+//               alignItems="flex-start"
+//               spacing={5}
+//               sx={{ mt: 1, width: "100%" }}
+//             >
+//               <Stack
+//                 direction="column"
+//                 justifyContent="flex-start"
+//                 alignItems="flex-start"
+//                 spacing={3}
+//                 sx={{ mt: 1, width: "100%" }}
+//               >
+//                 <Typography
+//                   sx={{
+//                     fontSize: "16px",
+//                     fontWeight: "bold",
+//                     color: theme.palette.primary.main,
+//                   }}
+//                 >
+//                   Eleven Multilingual v1
+//                 </Typography>
 
-                <div className="flex space-x-3 items-center ">
-                  <Typography
-                    sx={{
-                      fontSize: "14px",
-                      fontWeight: "semiBold",
-                      color: theme.palette.primary.main,
-                    }}
-                  >
-                    Languages:
-                  </Typography>
+//                 <Typography
+//                   sx={{
+//                     fontSize: "14px",
+//                     fontWeight: "medium",
+//                     color: theme.palette.primary.main,
+//                   }}
+//                 >
+//                   Use our standard English language model to generate speech in
+//                   a variety of voices, styles and moods.
+//                 </Typography>
 
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    sx={{
-                      minWidth: "5rem",
-                      textTransform: "capitalize",
-                      fontSize: "12px",
-                    }}
-                  >
-                    English
-                  </Button>
+//                 <div className="flex space-x-3 items-center ">
+//                   <Typography
+//                     sx={{
+//                       fontSize: "14px",
+//                       fontWeight: "semiBold",
+//                       color: theme.palette.primary.main,
+//                     }}
+//                   >
+//                     Tasks :
+//                   </Typography>
 
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    sx={{
-                      minWidth: "5rem",
-                      textTransform: "capitalize",
-                      fontSize: "12px",
-                    }}
-                  >
-                    German
-                  </Button>
-                </div>
-              </Stack>
-            </Stack>
-          </Box>
-          <Divider />
-        </Box>
-      </Modal>
-    </div>
-  )
-}
+//                   <Button
+//                     variant="outlined"
+//                     color="primary"
+//                     sx={{
+//                       minWidth: "5rem",
+//                       textTransform: "capitalize",
+//                       fontSize: "12px",
+//                     }}
+//                   >
+//                     Text to Speech
+//                   </Button>
+//                 </div>
+
+//                 <div className="flex space-x-3 items-center ">
+//                   <Typography
+//                     sx={{
+//                       fontSize: "14px",
+//                       fontWeight: "semiBold",
+//                       color: theme.palette.primary.main,
+//                     }}
+//                   >
+//                     Languages:
+//                   </Typography>
+
+//                   <Button
+//                     variant="outlined"
+//                     color="primary"
+//                     sx={{
+//                       minWidth: "5rem",
+//                       textTransform: "capitalize",
+//                       fontSize: "12px",
+//                     }}
+//                   >
+//                     English
+//                   </Button>
+
+//                   <Button
+//                     variant="outlined"
+//                     color="primary"
+//                     sx={{
+//                       minWidth: "5rem",
+//                       textTransform: "capitalize",
+//                       fontSize: "12px",
+//                     }}
+//                   >
+//                     German
+//                   </Button>
+//                 </div>
+//               </Stack>
+//             </Stack>
+//           </Box>
+//           <Divider />
+//         </Box>
+//       </Modal>
+//     </div>
+//   )
+// }
+
 function valuetext(value: number) {
   return `${value}%`
 }
@@ -485,18 +549,33 @@ export const Settings = () => {
   const [open2, setOpen2] = React.useState(false)
   const handleOpen2 = () => setOpen2(true)
   const handleClose2 = () => setOpen2(false)
-  const [selectedValue, setSelectedValue] = React.useState("a")
+
+  const model_id = {
+    1: "eleven_multilingual_v1",
+    2: "eleven_monolingual_v1",
+  }
+
+  const [_model_id, setModel_id] = React.useState("eleven_monolingual_v1")
+  const [_Accent, setAccent] = React.useState("21m00Tcm4TlvDq8ikWAM")
+
+  // const [selectedValue, setSelectedValue] = React.useState("eleven_multilingual_v1  eleven_monolingual_v1")
+  const [selectedValue, setSelectedValue] = React.useState(
+    "eleven_monolingual_v1"
+  )
 
   const handleChangeRadio = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedValue(event.target.value)
   }
 
-  const [stabilityvalue, setStabilityValue] = React.useState<number>(0)
-  const [lowvalue, setlowValue] = React.useState<number>(0)
+  const [stabilityvalue, setStabilityValue] = React.useState<number>(0.5)
+  const [similarity_boost, setsimilarity_boost] = React.useState<number>(0.5)
   const [paused, setPaused] = React.useState(false)
 
+  // console.log("stabilityvalue", stabilityvalue)
+  // console.log("similarity_boost", similarity_boost)
+
   const handleChangeLow = (event: Event, newValue: number | number[]) => {
-    setlowValue(newValue as number)
+    setsimilarity_boost(newValue as number)
   }
   const handleChangeStability = (event: Event, newValue: number | number[]) => {
     setStabilityValue(newValue as number)
@@ -553,14 +632,14 @@ export const Settings = () => {
 
                   <Slider
                     aria-label="Temperature"
-                    defaultValue={stabilityvalue}
+                    value={stabilityvalue}
                     getAriaValueText={valuetext}
                     onChange={handleChangeStability}
                     valueLabelDisplay="auto"
-                    step={5}
+                    step={0.1}
                     marks
                     min={0}
-                    max={100}
+                    max={1}
                   />
 
                   <div className="flex space-x-3">
@@ -591,15 +670,15 @@ export const Settings = () => {
                   </Typography>
 
                   <Slider
-                    aria-label="Temperature"
-                    defaultValue={lowvalue}
+                    aria-label="similarity_boost"
+                    value={similarity_boost}
                     getAriaValueText={valuetext}
                     onChange={handleChangeLow}
                     valueLabelDisplay="auto"
-                    step={5}
+                    step={0.1}
                     marks
                     min={0}
-                    max={100}
+                    max={1}
                   />
 
                   <div className="flex space-x-3">
@@ -725,11 +804,11 @@ export const Settings = () => {
                   }}
                 >
                   <Radio
-                    checked={selectedValue === "a"}
+                    checked={selectedValue === "eleven_monolingual_v1"}
                     onChange={handleChangeRadio}
-                    value="a"
+                    value="eleven_monolingual_v1"
                     name="radio-buttons"
-                    inputProps={{ "aria-label": "A" }}
+                    inputProps={{ "aria-label": "eleven_monolingual_v1" }}
                     sx={{
                       position: "absolute",
                       color: theme.palette.primary.main,
@@ -838,11 +917,11 @@ export const Settings = () => {
                   }}
                 >
                   <Radio
-                    checked={selectedValue === "b"}
+                    checked={selectedValue === "eleven_multilingual_v1"}
                     onChange={handleChangeRadio}
-                    value="b"
+                    value="eleven_multilingual_v1"
                     name="radio-buttons"
-                    inputProps={{ "aria-label": "B" }}
+                    inputProps={{ "aria-label": "eleven_multilingual_v1" }}
                     sx={{
                       position: "absolute",
                       top: "30px",
