@@ -1,3 +1,5 @@
+"use client"
+
 import { log } from "console"
 
 const dotenv = require("dotenv")
@@ -68,70 +70,70 @@ const callElevenLabsTextToSpeechAPI = async (props: ApiProps) => {
     const blob = await response.blob()
     const audioUrl = URL.createObjectURL(blob)
 
-    // return audioUrl
+    return audioUrl
   } catch (error) {
     console.error("Error:", error) // Handle any errors
   }
 
-  try {
-    const response = await fetch(getModel, {
-      method: "GET",
-      headers: headers,
-    })
+  //   try {
+  //     const response = await fetch(getModel, {
+  //       method: "GET",
+  //       headers: headers,
+  //     })
 
-    if (!response.ok) {
-      throw new Error("API request failed")
-    }
+  //     if (!response.ok) {
+  //       throw new Error("API request failed")
+  //     }
 
-    console.log("getModel response", response.json())
-  } catch (error) {
-    console.error("Error:", error) // Handle any errors
-  }
+  //     console.log("getModel response", response.json())
+  //   } catch (error) {
+  //     console.error("Error:", error) // Handle any errors
+  //   }
 
-  try {
-    const response = await fetch(getVoices, {
-      method: "GET",
-      headers: headers,
-    })
+  //   try {
+  //     const response = await fetch(getVoices, {
+  //       method: "GET",
+  //       headers: headers,
+  //     })
 
-    if (!response.ok) {
-      throw new Error("API request failed")
-    }
+  //     if (!response.ok) {
+  //       throw new Error("API request failed")
+  //     }
 
-    console.log("getVoices response", response.json())
-  } catch (error) {
-    console.error("Error:", error) // Handle any errors
-  }
+  //     console.log("getVoices response", response.json())
+  //   } catch (error) {
+  //     console.error("Error:", error) // Handle any errors
+  //   }
 
-  try {
-    const response = await fetch(getVoiceSettings, {
-      method: "GET",
-      headers: headers,
-    })
+  //   try {
+  //     const response = await fetch(getVoiceSettings, {
+  //       method: "GET",
+  //       headers: headers,
+  //     })
 
-    if (!response.ok) {
-      throw new Error("API request failed")
-    }
+  //     if (!response.ok) {
+  //       throw new Error("API request failed")
+  //     }
 
-    console.log("getVoiceSettings response", response.json())
-  } catch (error) {
-    console.error("Error:", error) // Handle any errors
-  }
+  //     console.log("getVoiceSettings response", response.json())
+  //   } catch (error) {
+  //     console.error("Error:", error) // Handle any errors
+  //   }
 
-  try {
-    const response = await fetch(getVoice, {
-      method: "GET",
-      headers: headers,
-    })
+  //   try {
+  //     const response = await fetch(getVoice, {
+  //       method: "GET",
+  //       headers: headers,
+  //     })
 
-    if (!response.ok) {
-      throw new Error("API request failed")
-    }
+  //     if (!response.ok) {
+  //       throw new Error("API request failed")
+  //     }
 
-    console.log("getVoice response", response.json())
-  } catch (error) {
-    console.error("Error:", error) // Handle any errors
-  }
+  //     console.log("getVoice response", response.json())
+  //   } catch (error) {
+  //     console.error("Error:", error) // Handle any errors
+  //   }
 }
 
 export { callElevenLabsTextToSpeechAPI }

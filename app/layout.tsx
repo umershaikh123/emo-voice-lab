@@ -1,7 +1,7 @@
 import { Navbar } from "@/components/Navbar"
 import "./globals.css"
 import { Inter } from "next/font/google"
-
+import { ApiProvider } from "@/hooks/ApiContext"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
@@ -19,7 +19,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className=" container mx-auto mt-5">
           <Navbar />
-          {children}
+          <ApiProvider>{children}</ApiProvider>
         </div>
       </body>
     </html>

@@ -38,6 +38,13 @@ import PauseIcon from "@mui/icons-material/Pause"
 import { callElevenLabsTextToSpeechAPI } from "@/utils/SpeechApi"
 import AudioPlayer from "./Audio"
 import anime from "animejs"
+import { useApiContext, ApiProvider } from "@/hooks/ApiContext"
+import {
+  useModelId,
+  useAccent,
+  useStability,
+  useSimilarityBoost,
+} from "@/hooks"
 
 const mainPrimary = theme.palette.primary.main
 const darkGreen = theme.palette.border.main
@@ -77,12 +84,6 @@ const CssTextField = styled(TextField)({
     },
   },
 })
-
-// interface Message {
-//   id: string
-//   role: "function" | "user" | "assistant" | "system"
-//   content: string
-// }
 
 interface UserMessage {
   role: "user"
@@ -171,13 +172,20 @@ interface ApiProps {
 export const Body = () => {
   // const { messages, input, handleInputChange, handleSubmit, setMessages } =
   //   useChat()
+  const {
+    model_id,
 
-  const [messages, setMessages] = React.useState<Message[]>([])
+    stability,
+
+    similarity_boost,
+    Accent,
+  } = useApiContext()
   const [promptValue, setPromptValue] = React.useState("")
-  const [_model_id, setModel_id] = React.useState("eleven_monolingual_v1")
-  const [_Accent, setAccent] = React.useState("21m00Tcm4TlvDq8ikWAM")
-  const [_stability, setStability] = React.useState(0.5)
-  const [_similarity_boost, setSimilarity_boost] = React.useState(0.5)
+  const [messages, setMessages] = React.useState<Message[]>([])
+  // const [_model_id, setModel_id] = React.useState("eleven_monolingual_v1")
+  // const [_Accent, setAccent] = React.useState("21m00Tcm4TlvDq8ikWAM")
+  // const [_stability, setStability] = React.useState(0.5)
+  // const [_similarity_boost, setSimilarity_boost] = React.useState(0.5)
 
   const ref = useRef<HTMLDivElement | null>(null)
 
@@ -247,10 +255,10 @@ export const Body = () => {
 
   const props: ApiProps = {
     text: promptValue,
-    model_id: _model_id,
-    Accent: _Accent,
-    stability: _stability,
-    similarity_boost: _similarity_boost,
+    model_id: model_id,
+    Accent: Accent,
+    stability: stability,
+    similarity_boost: similarity_boost,
   }
 
   return (
