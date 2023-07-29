@@ -381,7 +381,7 @@ export const Body = () => {
           >
             <form onSubmit={handleButtonSubmit} className="  w-full">
               <CssTextField
-                label="Prompt"
+                label="Say something..."
                 maxRows={10}
                 fullWidth
                 id="fullWidth"
@@ -404,6 +404,10 @@ export const Body = () => {
                   ),
                 }}
               />
+
+              <Typography variant="subtitle2" sx={{ mt: 1 }}>
+                Character Length : {promptValue.length}
+              </Typography>
             </form>
           </Stack>
         </Stack>
