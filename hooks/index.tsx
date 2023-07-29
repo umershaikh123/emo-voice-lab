@@ -19,3 +19,8 @@ export const useSimilarityBoost = (initialValue: number) => {
   const [similarity_boost, setSimilarity_boost] = React.useState(initialValue)
   return { similarity_boost, setSimilarity_boost }
 }
+
+export const useLoading = () => {
+  const [loading, setLoading] = React.useState(true)
+  return { loading, setLoading }
+}

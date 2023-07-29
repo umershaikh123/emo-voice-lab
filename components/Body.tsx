@@ -24,7 +24,7 @@ import SmartToyIcon from "@mui/icons-material/SmartToy"
 import { useCompletion, useChat } from "ai/react"
 import { useRouter } from "next/navigation"
 import { useParams } from "next/navigation"
-
+import CustomizedAccordions from "./Accordion"
 import InputAdornment from "@mui/material/InputAdornment"
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 import { styled } from "@mui/material/styles"
@@ -168,7 +168,7 @@ export const Body = () => {
     model_id,
 
     stability,
-
+    loading,
     similarity_boost,
     Accent,
   } = useApiContext()
@@ -194,7 +194,8 @@ export const Body = () => {
     setPromptValue(event.target.value)
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (event: any) => {
+    event.preventDefault()
     if (promptValue.trim() === "") {
       return // Don't submit empty messages
     }
@@ -221,7 +222,7 @@ export const Body = () => {
 
   const handleKeyDown = async (event: any) => {
     if (event.key === "Enter") {
-      handleSubmit()
+      handleSubmit(event)
     }
   }
 
@@ -323,6 +324,14 @@ export const Body = () => {
                         />
                       </div>
                     </Stack>
+
+                    {loading ? (
+                      <></>
+                    ) : (
+                      <div className="  whitespace-pre-wrap " ref={ref}>
+                        <CustomizedAccordions />
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -341,7 +350,7 @@ export const Body = () => {
               maxWidth: "100%",
             }}
           >
-            <form onSubmit={handleSubmit} className="  w-full">
+            <form onSubmit={handleSubmit} className="w-full">
               <CssTextField
                 label="Say something..."
                 maxRows={10}

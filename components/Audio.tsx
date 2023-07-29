@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useState, useRef, useEffect, useCallback } from "react"
 import {
   AppBar,
@@ -24,6 +26,8 @@ import { callElevenLabsTextToSpeechAPI } from "@/utils/SpeechApi"
 import { RingLoader, BeatLoader } from "react-spinners"
 import { theme } from "@/theme/theme"
 import anime from "animejs"
+import CustomizedAccordions from "./Accordion"
+import { useApiContext, ApiProvider } from "@/hooks/ApiContext"
 
 interface ApiProps {
   text: string
@@ -38,8 +42,9 @@ const AudioPlayer = (props: ApiProps) => {
   const [audioUrl, setAudioUrl] = useState<string | null>(null)
   const [isPlaying, setPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(0.0)
-  const [loading, setLoading] = useState(true) // Add the loading state
   const [duration, setDuration] = useState(0.0)
+  const [_loading, _setLoading] = useState(true) // Add the loading state
+  const { loading, setLoading } = useApiContext()
   const [loaded, setLoaded] = useState(false) // Add the loaded state
   const ref = useRef<HTMLDivElement | null>(null)
 
@@ -76,12 +81,14 @@ const AudioPlayer = (props: ApiProps) => {
     // Fetch audio URL when the component mounts
     const fetchAudioUrl = async () => {
       try {
+        setLoading(true)
         const url = await callElevenLabsTextToSpeechAPI(Props) // Replace with your API call
         setAudioUrl(url || null)
       } catch (error) {
         console.error("Error fetching audio URL:", error)
       } finally {
-        setLoading(false) // Once the API call is completed (success or error), set loading to false
+        _setLoading(false) // Once the API call is completed (success or error), set loading to false
+        setLoading(false)
       }
     }
     fetchAudioUrl()
@@ -134,14 +141,10 @@ const AudioPlayer = (props: ApiProps) => {
     }
   }, [audioUrl])
 
-  if (loading) {
+  if (_loading) {
     return (
       <div>
-        <BeatLoader
-          color={theme.palette.primary.main}
-          size={10}
-          loading={loading}
-        />
+        <BeatLoader color="#ffffff" size={10} loading={_loading} />
       </div>
     )
   }

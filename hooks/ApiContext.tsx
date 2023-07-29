@@ -9,6 +9,7 @@ import {
   useAccent,
   useStability,
   useSimilarityBoost,
+  useLoading,
 } from "./index"
 
 // Create a context to hold the shared state
@@ -25,6 +26,8 @@ export const ApiProvider: React.FC<ApiProviderProps> = ({ children }) => {
   const accentHook = useAccent("21m00Tcm4TlvDq8ikWAM")
   const stabilityHook = useStability(0.5)
   const similarityBoostHook = useSimilarityBoost(0.5)
+  const loadingHook = useLoading()
+  // const { loading, setLoading } = useLoading();
 
   return (
     <ApiContext.Provider
@@ -37,6 +40,8 @@ export const ApiProvider: React.FC<ApiProviderProps> = ({ children }) => {
         setStability: stabilityHook.setStability,
         similarity_boost: similarityBoostHook.similarity_boost,
         setSimilarity_boost: similarityBoostHook.setSimilarity_boost,
+        loading: loadingHook.loading,
+        setLoading: loadingHook.setLoading,
       }}
     >
       {children}
