@@ -19,7 +19,7 @@ import {
 } from "@mui/material"
 import { ThemeProvider } from "@mui/material"
 import { theme } from "@/theme/theme"
-import { Children, useEffect } from "react"
+import { Children, useEffect, useRef } from "react"
 
 import { useCompletion, useChat } from "ai/react"
 import { useRouter } from "next/navigation"
@@ -35,6 +35,9 @@ import PlayCircleIcon from "@mui/icons-material/PlayCircle"
 import PauseCircleIcon from "@mui/icons-material/PauseCircle"
 import PlayArrowIcon from "@mui/icons-material/PlayArrow"
 import PauseIcon from "@mui/icons-material/Pause"
+import { callElevenLabsTextToSpeechAPI } from "@/utils/SpeechApi"
+import AudioPlayer from "./Audio"
+import anime from "animejs"
 
 const mainPrimary = theme.palette.primary.main
 const darkGreen = theme.palette.border.main
@@ -75,21 +78,50 @@ const CssTextField = styled(TextField)({
   },
 })
 
-interface Message {
+// interface Message {
+//   id: string
+//   role: "function" | "user" | "assistant" | "system"
+//   content: string
+// }
+
+interface UserMessage {
+  role: "user"
   id: string
-  role: "function" | "user" | "assistant" | "system"
   content: string
 }
 
-const Messages: Message[] = [
-  { id: "1", role: "assistant", content: "Type a sentence to get started" },
-  { id: "2", role: "user", content: "prompt" },
-  { id: "3", role: "assistant", content: "Hello! How can I assist you today?" },
-]
+interface AssistantMessage {
+  role: "assistant"
+  id: string
+  content: string
+  // audioUrl: string
+}
 
-export default function ContinuousSlider() {
+// Define the union type for messages
+type Message = UserMessage | AssistantMessage
+
+const Messages: Message[] = [
+  {
+    role: "user",
+    id: "1",
+    content: "prompt",
+  },
+  {
+    role: "assistant",
+    id: "1",
+    content: "prompt",
+  },
+]
+// {
+//   id: "1",
+//   role: "user",
+//   content: "prompt",
+// },
+// { id: "2", role: "assistant", content: "Type a sentence to get started" },
+export function ContinuousSlider() {
   const [value, setValue] = React.useState<number>(0)
   const [paused, setPaused] = React.useState(false)
+
   const handleChange = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number)
   }
@@ -128,19 +160,76 @@ export default function ContinuousSlider() {
   )
 }
 export const Body = () => {
-  const { messages, input, handleInputChange, handleSubmit, setMessages } =
-    useChat()
+  // const { messages, input, handleInputChange, handleSubmit, setMessages } =
+  //   useChat()
+
+  const [messages, setMessages] = React.useState<Message[]>([])
+  const [promptValue, setPromptValue] = React.useState("")
+
+  const ref = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    const Reveal = ref.current
+
+    if (Reveal) {
+      // Animation using anime.js, only when loaded
+      anime({
+        targets: Reveal,
+        opacity: [0, 1],
+        duration: 1200,
+        easing: "easeOutSine",
+      })
+    }
+  }, [])
+
+  const handlePromptChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPromptValue(event.target.value)
+  }
+
+  const handleSubmit = () => {
+    if (promptValue.trim() === "") {
+      return // Don't submit empty messages
+    }
+
+    const userMessage: UserMessage = {
+      role: "user",
+      id: String(Date.now()), // You can use a better method to generate IDs
+      content: promptValue.trim(),
+    }
+
+    // setMessages(prevMessages => [...prevMessages, userMessage])
+    // setPromptValue("")
+
+    const assistantMessage: AssistantMessage = {
+      role: "assistant",
+      id: String(Date.now()), // You can use a better method to generate IDs
+      content: promptValue.trim(), // Replace 'url' with the actual audio URL generated for the user's prompt
+    }
+
+    setMessages(prevMessages => [
+      ...prevMessages,
+      userMessage,
+      assistantMessage,
+    ])
+    setPromptValue("")
+  }
+
   const handleKeyDown = async (event: any) => {
     if (event.key === "Enter") {
-      handleButtonSubmit(event)
+      handleSubmit()
     }
   }
 
+  // const audio = callElevenLabsTextToSpeechAPI(
+  //   "Hello! How can I assist you today?"
+  // )
+  // console.log(audio)
+
   const handleButtonSubmit = async (event: any) => {
     event.preventDefault()
-    handleSubmit(event)
+    // handleSubmit(event)
 
-    setMessages(Messages)
+    // setMessages(Messages)
   }
 
   return (
@@ -173,8 +262,12 @@ export const Body = () => {
               maxWidth: "100%",
             }}
           >
-            {messages.map(m => (
-              <div key={m.id} className=" justify-start bg-[#1A0B11]  w-full ">
+            {messages.map((m, index) => (
+              <div
+                key={index}
+                className=" justify-start bg-[#1A0B11]  w-full "
+                ref={ref}
+              >
                 {m.role === "user" ? (
                   <div className="  ">
                     <Stack
@@ -227,7 +320,9 @@ export const Body = () => {
 
                       <div className=" w-full   leading-relaxed text-sm   font-medium">
                         {/* {m.content} */}
-                        <ContinuousSlider />
+                        {/* <ContinuousSlider /> */}
+
+                        <AudioPlayer text={m.content} />
                       </div>
                     </Stack>
                   </div>
@@ -256,9 +351,10 @@ export const Body = () => {
                 fullWidth
                 id="fullWidth"
                 multiline
-                value={input}
-                onChange={handleInputChange}
+                value={promptValue}
+                onChange={handlePromptChange}
                 onKeyDown={handleKeyDown}
+                // onSubmit={handleSubmit}
                 // sx={{ width: '100%' }}
                 InputProps={{
                   endAdornment: (
@@ -266,7 +362,7 @@ export const Body = () => {
                       position="end"
                       sx={{ color: theme.palette.primary.main }}
                     >
-                      <Button type="submit">
+                      <Button type="submit" onClick={handleSubmit}>
                         <SendIcon />
                       </Button>
                     </InputAdornment>
@@ -280,49 +376,3 @@ export const Body = () => {
     </div>
   )
 }
-
-const callElevenLabsTextToSpeechAPI = async (text: string) => {
-  if (!text) return "Text parameter can't be null"
-
-  const [rachel, anntoni] = ["21m00Tcm4TlvDq8ikWAM", "ErXwobaYiN019PkySvjV"]
-
-  const url = `https://api.elevenlabs.io/v1/text-to-speech/${rachel}`
-
-  const apiKey = process.env.ELEVENLABS_API_KEY
-
-  const headers = {
-    accept: "audio/mpeg",
-    "xi-api-key": apiKey,
-    "Content-Type": "application/json",
-  }
-
-  const data = {
-    text,
-    model_id: "eleven_monolingual_v1",
-    voice_settings: {
-      stability: 0.5,
-      similarity_boost: 0.5,
-    },
-  }
-
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: headers,
-      body: JSON.stringify(data),
-    })
-
-    if (!response.ok) {
-      throw new Error("API request failed")
-    }
-
-    const blob = await response.blob()
-    const audioUrl = URL.createObjectURL(blob)
-
-    return audioUrl
-  } catch (error) {
-    console.error("Error:", error) // Handle any errors
-  }
-}
-
-export { callElevenLabsTextToSpeechAPI }
