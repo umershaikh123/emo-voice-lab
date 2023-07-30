@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useEffect } from "react"
 import {
   AppBar,
   Box,
@@ -21,6 +21,7 @@ import {
   Slider,
   Radio,
   NativeSelect,
+  Fade,
   Stack,
 } from "@mui/material"
 import { ThemeProvider } from "@mui/material"
@@ -35,6 +36,8 @@ import InfoIcon from "@mui/icons-material/Info"
 import Select, { SelectChangeEvent } from "@mui/material/Select"
 
 import { useApiContext, ApiProvider } from "@/hooks/ApiContext"
+import anime from "animejs"
+import { useRef } from "react"
 
 import { styled } from "@mui/material"
 import { Theme, useTheme } from "@mui/material/styles"
@@ -189,6 +192,8 @@ function valuetext(value: number) {
 }
 
 export const Settings = () => {
+  const Ref = useRef(null)
+
   const [age, setAge] = React.useState("")
   const [open, setOpen] = React.useState(false)
   const handleOpen = () => setOpen(true)
@@ -224,6 +229,18 @@ export const Settings = () => {
     setStability(newValue as number)
   }
 
+  useEffect(() => {
+    const ref = Ref.current
+
+    anime({
+      targets: ref,
+
+      opacity: [0, 1],
+      easing: "easeInOutSine",
+      duration: 1200,
+      direction: "alternate",
+    })
+  }, [])
   return (
     <div className="w-full">
       <ThemeProvider theme={theme}>
@@ -234,109 +251,111 @@ export const Settings = () => {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
-            <Box sx={style}>
-              <Typography
-                id="modal-modal-title"
-                sx={{
-                  fontSize: "24px",
-                  fontWeight: "bold",
-                  color: theme.palette.primary.main,
-                }}
-              >
-                Voice Settings
-              </Typography>
-              <Divider
-                sx={{
-                  mt: 1,
-                  border: `1px solid ${theme.palette.border.main}`,
-                }}
-              />
-              <Stack
-                direction="column"
-                justifyContent="flex-start"
-                alignItems="flex-start"
-                spacing={5}
-                sx={{ mt: 1, width: "100%" }}
-              >
+            <Fade in={open}>
+              <Box sx={style}>
+                <Typography
+                  id="modal-modal-title"
+                  sx={{
+                    fontSize: "24px",
+                    fontWeight: "bold",
+                    color: theme.palette.primary.main,
+                  }}
+                >
+                  Voice Settings
+                </Typography>
+                <Divider
+                  sx={{
+                    mt: 1,
+                    border: `1px solid ${theme.palette.border.main}`,
+                  }}
+                />
                 <Stack
                   direction="column"
                   justifyContent="flex-start"
                   alignItems="flex-start"
-                  spacing={1}
+                  spacing={5}
                   sx={{ mt: 1, width: "100%" }}
                 >
-                  <Typography
-                    id="modal-modal-description"
-                    sx={{ fontSize: "20px", fontWeight: "bold" }}
+                  <Stack
+                    direction="column"
+                    justifyContent="flex-start"
+                    alignItems="flex-start"
+                    spacing={1}
+                    sx={{ mt: 1, width: "100%" }}
                   >
-                    Stability
-                  </Typography>
-
-                  <Slider
-                    aria-label="Temperature"
-                    value={stability}
-                    getAriaValueText={valuetext}
-                    onChange={handleChangeStability}
-                    valueLabelDisplay="auto"
-                    step={0.1}
-                    marks
-                    min={0}
-                    max={1}
-                  />
-
-                  <div className="flex space-x-3">
                     <Typography
                       id="modal-modal-description"
-                      sx={{ fontSize: "16px", fontWeight: "medium" }}
+                      sx={{ fontSize: "20px", fontWeight: "bold" }}
                     >
-                      More Variable
+                      Stability
                     </Typography>
-                    <Tooltip title="Increasing variability can make speech more expressive with output varying between re-generations. It can also lead to instabilities.">
-                      <InfoIcon />
-                    </Tooltip>
-                  </div>
-                </Stack>
 
-                <Stack
-                  direction="column"
-                  justifyContent="flex-start"
-                  alignItems="flex-start"
-                  spacing={1}
-                  sx={{ mt: 1, width: "100%" }}
-                >
-                  <Typography
-                    id="modal-modal-description"
-                    sx={{ fontSize: "20px", fontWeight: "bold" }}
+                    <Slider
+                      aria-label="Temperature"
+                      value={stability}
+                      getAriaValueText={valuetext}
+                      onChange={handleChangeStability}
+                      valueLabelDisplay="auto"
+                      step={0.1}
+                      marks
+                      min={0}
+                      max={1}
+                    />
+
+                    <div className="flex space-x-3">
+                      <Typography
+                        id="modal-modal-description"
+                        sx={{ fontSize: "16px", fontWeight: "medium" }}
+                      >
+                        More Variable
+                      </Typography>
+                      <Tooltip title="Increasing variability can make speech more expressive with output varying between re-generations. It can also lead to instabilities.">
+                        <InfoIcon />
+                      </Tooltip>
+                    </div>
+                  </Stack>
+
+                  <Stack
+                    direction="column"
+                    justifyContent="flex-start"
+                    alignItems="flex-start"
+                    spacing={1}
+                    sx={{ mt: 1, width: "100%" }}
                   >
-                    Clarity + Similiarity Enhancement
-                  </Typography>
-
-                  <Slider
-                    aria-label="similarity_boost"
-                    value={similarity_boost}
-                    getAriaValueText={valuetext}
-                    onChange={handleChangeLow}
-                    valueLabelDisplay="auto"
-                    step={0.1}
-                    marks
-                    min={0}
-                    max={1}
-                  />
-
-                  <div className="flex space-x-3">
                     <Typography
                       id="modal-modal-description"
-                      sx={{ fontSize: "16px", fontWeight: "medium" }}
+                      sx={{ fontSize: "20px", fontWeight: "bold" }}
                     >
-                      Low
+                      Clarity + Similiarity Enhancement
                     </Typography>
-                    <Tooltip title="Low values are recommended if background artifacts are present in generated speech.">
-                      <InfoIcon />
-                    </Tooltip>
-                  </div>
+
+                    <Slider
+                      aria-label="similarity_boost"
+                      value={similarity_boost}
+                      getAriaValueText={valuetext}
+                      onChange={handleChangeLow}
+                      valueLabelDisplay="auto"
+                      step={0.1}
+                      marks
+                      min={0}
+                      max={1}
+                    />
+
+                    <div className="flex space-x-3">
+                      <Typography
+                        id="modal-modal-description"
+                        sx={{ fontSize: "16px", fontWeight: "medium" }}
+                      >
+                        Low
+                      </Typography>
+                      <Tooltip title="Low values are recommended if background artifacts are present in generated speech.">
+                        <InfoIcon />
+                      </Tooltip>
+                    </div>
+                  </Stack>
                 </Stack>
-              </Stack>
-            </Box>
+              </Box>
+            </Fade>
           </Modal>
         </div>
 
@@ -400,257 +419,259 @@ export const Settings = () => {
               aria-labelledby="modal-modal-title"
               aria-describedby="modal-modal-description"
             >
-              <Box sx={style}>
-                <Typography
-                  id="modal-modal-title"
-                  sx={{
-                    fontSize: "24px",
-                    fontWeight: "bold",
-                    color: theme.palette.primary.main,
-                  }}
-                >
-                  Choose a Model
-                </Typography>
-
-                <Box
-                  sx={{
-                    border: `1px solid ${theme.palette.border.main}`,
-                    padding: "10px",
-                    borderRadius: "10px",
-                    position: "relative",
-                    py: 3,
-                    mt: 3,
-                    px: 5,
-                  }}
-                >
-                  <Radio
-                    checked={model_id === "eleven_monolingual_v1"}
-                    onChange={handleChangeRadio}
-                    value="eleven_monolingual_v1"
-                    name="radio-buttons"
-                    inputProps={{ "aria-label": "eleven_monolingual_v1" }}
+              <Fade in={open2}>
+                <Box sx={style}>
+                  <Typography
+                    id="modal-modal-title"
                     sx={{
-                      position: "absolute",
+                      fontSize: "24px",
+                      fontWeight: "bold",
                       color: theme.palette.primary.main,
-                      top: "30px",
-                      right: "20px",
-                      "& .MuiSvgIcon-root": {
-                        fontSize: 28,
-                      },
                     }}
-                  />
-                  <Stack
-                    direction="column"
-                    justifyContent="flex-start"
-                    alignItems="flex-start"
-                    spacing={5}
-                    sx={{ mt: 1, width: "100%" }}
                   >
+                    Choose a Model
+                  </Typography>
+
+                  <Box
+                    sx={{
+                      border: `1px solid ${theme.palette.border.main}`,
+                      padding: "10px",
+                      borderRadius: "10px",
+                      position: "relative",
+                      py: 3,
+                      mt: 3,
+                      px: 5,
+                    }}
+                  >
+                    <Radio
+                      checked={model_id === "eleven_monolingual_v1"}
+                      onChange={handleChangeRadio}
+                      value="eleven_monolingual_v1"
+                      name="radio-buttons"
+                      inputProps={{ "aria-label": "eleven_monolingual_v1" }}
+                      sx={{
+                        position: "absolute",
+                        color: theme.palette.primary.main,
+                        top: "30px",
+                        right: "20px",
+                        "& .MuiSvgIcon-root": {
+                          fontSize: 28,
+                        },
+                      }}
+                    />
                     <Stack
                       direction="column"
                       justifyContent="flex-start"
                       alignItems="flex-start"
-                      spacing={3}
+                      spacing={5}
                       sx={{ mt: 1, width: "100%" }}
                     >
-                      <Typography
-                        sx={{
-                          fontSize: "16px",
-                          fontWeight: "bold",
-                          color: theme.palette.primary.main,
-                        }}
+                      <Stack
+                        direction="column"
+                        justifyContent="flex-start"
+                        alignItems="flex-start"
+                        spacing={3}
+                        sx={{ mt: 1, width: "100%" }}
                       >
-                        Eleven English v1
-                      </Typography>
-
-                      <Typography
-                        sx={{
-                          fontSize: "14px",
-                          fontWeight: "medium",
-                          color: theme.palette.primary.main,
-                        }}
-                      >
-                        Use our standard English language model to generate
-                        speech in a variety of voices, styles and moods.
-                      </Typography>
-
-                      <div className="flex space-x-3 items-center ">
                         <Typography
                           sx={{
-                            fontSize: "14px",
-                            fontWeight: "semiBold",
+                            fontSize: "16px",
+                            fontWeight: "bold",
                             color: theme.palette.primary.main,
                           }}
                         >
-                          Tasks :
+                          Eleven English v1
                         </Typography>
 
-                        <Button
-                          variant="outlined"
-                          color="primary"
-                          sx={{
-                            minWidth: "5rem",
-                            textTransform: "capitalize",
-                            fontSize: "12px",
-                          }}
-                        >
-                          Text to Speech
-                        </Button>
-                      </div>
-
-                      <div className="flex space-x-3 items-center ">
                         <Typography
                           sx={{
                             fontSize: "14px",
-                            fontWeight: "semiBold",
+                            fontWeight: "medium",
                             color: theme.palette.primary.main,
                           }}
                         >
-                          Languages:
+                          Use our standard English language model to generate
+                          speech in a variety of voices, styles and moods.
                         </Typography>
 
-                        <Button
-                          variant="outlined"
-                          color="primary"
-                          sx={{
-                            minWidth: "5rem",
-                            textTransform: "capitalize",
-                            fontSize: "12px",
-                          }}
-                        >
-                          English
-                        </Button>
-                      </div>
+                        <div className="flex space-x-3 items-center ">
+                          <Typography
+                            sx={{
+                              fontSize: "14px",
+                              fontWeight: "semiBold",
+                              color: theme.palette.primary.main,
+                            }}
+                          >
+                            Tasks :
+                          </Typography>
+
+                          <Button
+                            variant="outlined"
+                            color="primary"
+                            sx={{
+                              minWidth: "5rem",
+                              textTransform: "capitalize",
+                              fontSize: "12px",
+                            }}
+                          >
+                            Text to Speech
+                          </Button>
+                        </div>
+
+                        <div className="flex space-x-3 items-center ">
+                          <Typography
+                            sx={{
+                              fontSize: "14px",
+                              fontWeight: "semiBold",
+                              color: theme.palette.primary.main,
+                            }}
+                          >
+                            Languages:
+                          </Typography>
+
+                          <Button
+                            variant="outlined"
+                            color="primary"
+                            sx={{
+                              minWidth: "5rem",
+                              textTransform: "capitalize",
+                              fontSize: "12px",
+                            }}
+                          >
+                            English
+                          </Button>
+                        </div>
+                      </Stack>
                     </Stack>
-                  </Stack>
-                </Box>
+                  </Box>
 
-                <Box
-                  sx={{
-                    border: `1px solid ${theme.palette.border.main}`,
-                    padding: "10px",
-                    borderRadius: "10px",
-                    position: "relative",
-                    py: 3,
-                    mt: 3,
-                    px: 5,
-                  }}
-                >
-                  <Radio
-                    checked={model_id === "eleven_multilingual_v1"}
-                    onChange={handleChangeRadio}
-                    value="eleven_multilingual_v1"
-                    name="radio-buttons"
-                    inputProps={{ "aria-label": "eleven_multilingual_v1" }}
+                  <Box
                     sx={{
-                      position: "absolute",
-                      top: "30px",
-                      right: "20px",
-                      color: theme.palette.primary.main,
-                      "& .MuiSvgIcon-root": {
-                        fontSize: 28,
-                      },
+                      border: `1px solid ${theme.palette.border.main}`,
+                      padding: "10px",
+                      borderRadius: "10px",
+                      position: "relative",
+                      py: 3,
+                      mt: 3,
+                      px: 5,
                     }}
-                  />
-                  <Stack
-                    direction="column"
-                    justifyContent="flex-start"
-                    alignItems="flex-start"
-                    spacing={5}
-                    sx={{ mt: 1, width: "100%" }}
                   >
+                    <Radio
+                      checked={model_id === "eleven_multilingual_v1"}
+                      onChange={handleChangeRadio}
+                      value="eleven_multilingual_v1"
+                      name="radio-buttons"
+                      inputProps={{ "aria-label": "eleven_multilingual_v1" }}
+                      sx={{
+                        position: "absolute",
+                        top: "30px",
+                        right: "20px",
+                        color: theme.palette.primary.main,
+                        "& .MuiSvgIcon-root": {
+                          fontSize: 28,
+                        },
+                      }}
+                    />
                     <Stack
                       direction="column"
                       justifyContent="flex-start"
                       alignItems="flex-start"
-                      spacing={3}
+                      spacing={5}
                       sx={{ mt: 1, width: "100%" }}
                     >
-                      <Typography
-                        sx={{
-                          fontSize: "16px",
-                          fontWeight: "bold",
-                          color: theme.palette.primary.main,
-                        }}
+                      <Stack
+                        direction="column"
+                        justifyContent="flex-start"
+                        alignItems="flex-start"
+                        spacing={3}
+                        sx={{ mt: 1, width: "100%" }}
                       >
-                        Eleven Multilingual v1
-                      </Typography>
-
-                      <Typography
-                        sx={{
-                          fontSize: "14px",
-                          fontWeight: "medium",
-                          color: theme.palette.primary.main,
-                        }}
-                      >
-                        Use our standard English language model to generate
-                        speech in a variety of voices, styles and moods.
-                      </Typography>
-
-                      <div className="flex space-x-3 items-center ">
                         <Typography
                           sx={{
-                            fontSize: "14px",
-                            fontWeight: "semiBold",
+                            fontSize: "16px",
+                            fontWeight: "bold",
                             color: theme.palette.primary.main,
                           }}
                         >
-                          Tasks :
+                          Eleven Multilingual v1
                         </Typography>
 
-                        <Button
-                          variant="outlined"
-                          color="primary"
-                          sx={{
-                            minWidth: "5rem",
-                            textTransform: "capitalize",
-                            fontSize: "12px",
-                          }}
-                        >
-                          Text to Speech
-                        </Button>
-                      </div>
-
-                      <div className="flex space-x-3 items-center ">
                         <Typography
                           sx={{
                             fontSize: "14px",
-                            fontWeight: "semiBold",
+                            fontWeight: "medium",
                             color: theme.palette.primary.main,
                           }}
                         >
-                          Languages:
+                          Use our standard English language model to generate
+                          speech in a variety of voices, styles and moods.
                         </Typography>
 
-                        <Button
-                          variant="outlined"
-                          color="primary"
-                          sx={{
-                            minWidth: "5rem",
-                            textTransform: "capitalize",
-                            fontSize: "12px",
-                          }}
-                        >
-                          English
-                        </Button>
+                        <div className="flex space-x-3 items-center ">
+                          <Typography
+                            sx={{
+                              fontSize: "14px",
+                              fontWeight: "semiBold",
+                              color: theme.palette.primary.main,
+                            }}
+                          >
+                            Tasks :
+                          </Typography>
 
-                        <Button
-                          variant="outlined"
-                          color="primary"
-                          sx={{
-                            minWidth: "5rem",
-                            textTransform: "capitalize",
-                            fontSize: "12px",
-                          }}
-                        >
-                          German
-                        </Button>
-                      </div>
+                          <Button
+                            variant="outlined"
+                            color="primary"
+                            sx={{
+                              minWidth: "5rem",
+                              textTransform: "capitalize",
+                              fontSize: "12px",
+                            }}
+                          >
+                            Text to Speech
+                          </Button>
+                        </div>
+
+                        <div className="flex space-x-3 items-center ">
+                          <Typography
+                            sx={{
+                              fontSize: "14px",
+                              fontWeight: "semiBold",
+                              color: theme.palette.primary.main,
+                            }}
+                          >
+                            Languages:
+                          </Typography>
+
+                          <Button
+                            variant="outlined"
+                            color="primary"
+                            sx={{
+                              minWidth: "5rem",
+                              textTransform: "capitalize",
+                              fontSize: "12px",
+                            }}
+                          >
+                            English
+                          </Button>
+
+                          <Button
+                            variant="outlined"
+                            color="primary"
+                            sx={{
+                              minWidth: "5rem",
+                              textTransform: "capitalize",
+                              fontSize: "12px",
+                            }}
+                          >
+                            German
+                          </Button>
+                        </div>
+                      </Stack>
                     </Stack>
-                  </Stack>
+                  </Box>
+                  <Divider />
                 </Box>
-                <Divider />
-              </Box>
+              </Fade>
             </Modal>
           </div>
         </Stack>
