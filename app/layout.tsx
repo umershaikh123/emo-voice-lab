@@ -18,7 +18,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div className=" container mx-auto mt-5">
-          <Navbar />
           <ApiProvider>{children}</ApiProvider>
         </div>
       </body>

@@ -21,11 +21,39 @@ import { ThemeProvider } from "@mui/material"
 import { theme } from "@/theme/theme"
 import { Body } from "@/components/Body"
 import { Settings } from "@/components/Settings"
+import { LoadingScreen } from "@/components/Loading"
+import anime from "animejs"
+import { Navbar } from "@/components/Navbar"
 export default function Chat() {
   const { messages, input, handleInputChange, handleSubmit } = useChat()
+  const [isLoading, setIsLoading] = useState(true)
+  const Ref = useRef(null)
+
+  useEffect(() => {
+    const ref = Ref.current
+
+    anime({
+      targets: ref,
+
+      opacity: [0, 1],
+      easing: "easeInOutSine",
+      duration: 300,
+    })
+  }, [isLoading])
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 3400) // Adjust the duration as needed
+  }, [])
+
+  if (isLoading) {
+    return <LoadingScreen />
+  }
 
   return (
-    <div className="">
+    <div className="" ref={Ref}>
+      <Navbar />
       <ThemeProvider theme={theme}>
         <Stack
           direction="row"
