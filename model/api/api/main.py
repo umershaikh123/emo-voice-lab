@@ -1,9 +1,8 @@
-pip install flask transformers torch torchaudio gtts pydub
 
 import os
 import torch
 import torchaudio
-from transformers import Wav2Vec2Tokenizer, Wav2Vec2ForCTC, RobertaTokenizer, RobertaForSequenceClassification
+from transformers import Wav2Vec2Tokenizer, Wav2Vec2ForCTC, AutoTokenizer, AutoModelForSequenceClassification
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
@@ -51,15 +50,16 @@ def detect_emotion(text, emotion_model):
     if not text or not isinstance(text, str):
         raise ValueError("Input text should be a non-empty string.")
 
-    tokenizer = RobertaTokenizer.from_pretrained(emotion_model)
-    model = RobertaForSequenceClassification.from_pretrained(emotion_model)
+    tokenizer = AutoTokenizer.from_pretrained(emotion_model)
+    model = AutoModelForSequenceClassification.from_pretrained(emotion_model)
+
     inputs = tokenizer(text, return_tensors="pt", truncation=True, padding=True)
     outputs = model(**inputs)
     logits = outputs.logits
     prediction = torch.argmax(logits, dim=1).item()
     emotion = emotion_labels[prediction]
-    return emotion
 
+    return emotion
 def generate_speech(text, emotion):
     voice_options = {
         "anger": "com/en-us/stu/stu/",
