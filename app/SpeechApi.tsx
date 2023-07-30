@@ -1,10 +1,3 @@
-"use client"
-
-import { log } from "console"
-
-const dotenv = require("dotenv")
-dotenv.config()
-
 interface ApiProps {
   text: string
   model_id: string
@@ -38,14 +31,18 @@ const callElevenLabsTextToSpeechAPI = async (props: ApiProps) => {
   const getVoiceSettings = `https://api.elevenlabs.io/v1/voices/${accent}/settings`
   const getVoice = `https://api.elevenlabs.io/v1/voices/${accent}?with_settings=true`
 
-  const apiKey =
-    process.env.ELEVENLABS_API_KEY || "ac75398e6e5fd14278cabb385866fea2"
+  // const apiKey = process.env.ELEVENLABS_API_KEY || "undefined"
+
+  console.log("process env", process.env)
+  // console.log("Api Key", process.env.NEXT_PUBLIC_ELEVENLABS_API_KEY)
 
   const headers = {
     accept: "audio/mpeg",
-    "xi-api-key": apiKey,
+    "xi-api-key":
+      process.env.ELEVENLABS_API_KEY || "ac75398e6e5fd14278cabb385866fea2",
     "Content-Type": "application/json",
   }
+  console.log("Api Key speech", process.env.ELEVENLABS_API_KEY)
 
   const data = {
     text,

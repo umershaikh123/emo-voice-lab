@@ -24,6 +24,7 @@ import { Settings } from "@/components/Settings"
 import { LoadingScreen } from "@/components/Loading"
 import anime from "animejs"
 import { Navbar } from "@/components/Navbar"
+
 export default function Chat() {
   const { messages, input, handleInputChange, handleSubmit } = useChat()
   const [isLoading, setIsLoading] = useState(true)

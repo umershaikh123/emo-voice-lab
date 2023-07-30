@@ -29,7 +29,7 @@ export const LoadingScreen = () => {
         <div ref={Ref} className="mt-4 mr-6 opacity-0">
           <Image src={"/Images/logo.svg"} width={80} height={80} alt="logo" />
         </div>
-        <div>
+        <div className=" ">
           <LoadingText1 />
         </div>
       </div>
