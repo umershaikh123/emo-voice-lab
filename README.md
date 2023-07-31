@@ -2,6 +2,9 @@
 
 Welcome to EmoVoiceLabs, the revolutionary text-to-speech application that adds emotions to your conversations! 🚀
 
+![image](https://github.com/umershaikh123/emo-voice-lab/assets/42178214/06f54e7e-54a0-4a68-9ad4-9ab33e464f1c)
+
+
 ## Problem Statement
 
 Current text-to-speech (TTS) technology lacks emotional expression, resulting in flat and unengaging interactions. EmoVoiceLabs aims to bridge this gap by infusing personalized emotional voice generation into every word.
