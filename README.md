@@ -11,12 +11,13 @@ Current text-to-speech (TTS) technology lacks emotional expression, resulting in
 EmoVoiceLabs utilizes advanced AI technology, employing cutting-edge machine learning algorithms to analyze input text and generate appropriate emotional expressions. The result? A more natural and human-like speaking style that enhances user experiences.
 
 ## How it Works
+Please note that currently, the model has not been integrated into the frontend. Everything is run locally on the server.
 
 1. **Input Prompt**: Start with a prompt or text as input.
 2. **Speech-to-Text Transcription**: Preprocess the audio file and perform Speech to Text Transcription using Facebook's Wav2Vec2 model.
 3. **Sentiment Analysis**: Our powerful sentiment analysis engine identifies emotions from the text.
 4. **Emotion-Infused Audio**: Based on the sentiment analysis results, we employ Google's Text-to-Speech model to generate emotive audio.
-Please note that currently, the model has not been integrated into the frontend. Everything is run locally on the server.
+
 
 ## Business Value
 
